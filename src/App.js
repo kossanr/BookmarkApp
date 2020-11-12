@@ -39,16 +39,27 @@ export default class App extends React.Component {
         this.setState({ error: err.message });
       });
   }
-
+  //methods
   setShowAddForm(show) {
     this.setState({
       showAddForm: show,
     });
   }
+
+  addBookmark(bookmark) {
+    this.setState({
+      //the spread operator is used to copy the bookmarks array into a new array then the new bookmark is added to the end of the new array.
+      bookmarks: [...this.state.bookmarks, bookmark],
+      showAddForm: false,
+    });
+  }
   render() {
     const page =
       this.state.showAddForm === true ? (
-        <AddBookmark />
+        <AddBookmark
+          showForm={(show) => this.setShowAddForm(show)}
+          handleAdd={(bookmark) => this.addBookmark(bookmark)}
+        />
       ) : (
         <BookmarkApp
           bookmarks={this.state.bookmarks}
